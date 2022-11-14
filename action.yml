@@ -1,0 +1,24 @@
+name: 'crowdin-request-action'
+description: "A GitHub Action to send arbitrary requests to Crowdin's REST API"
+author: 'Andrii Bodnar'
+
+branding:
+  icon: 'box'
+  color: 'green'
+
+inputs:
+  route:
+    description: 'HTTP Verb + path'
+    required: true
+
+outputs:
+  status:
+    description: 'Response status code'
+  headers:
+    description: 'Response headers as JSON string with lower cased header names'
+  data:
+    description: 'Response body as string'
+
+runs:
+  using: 'node16'
+  main: 'dist/index.js'
