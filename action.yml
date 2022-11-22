@@ -10,6 +10,103 @@ inputs:
   route:
     description: 'HTTP Verb + path'
     required: true
+  body:
+    description: 'Request body (for POST, PUT, PATCH methods)'
+    required: false
+  query:
+    description: 'Query parameters (for GET methods)'
+    required: false
+  headers:
+    description: 'Request headers'
+    required: false
+
+  # Retry configuration
+  retries:
+    description: 'Retries count'
+    required: false
+  wait_interval:
+    description: 'Wait interval in milliseconds between retries'
+    required: false
+  skip_error_codes:
+    description: 'Error codes to check if retry should not be applied (separated by comma)'
+    required: false
+  retry_until_finished:
+    description: 'Retry the request until the asynchronous action finished (should be used to check the status of the operation)'
+    required: false
+
+  # TODO: fetch all configuration
+
+  # Path parameters
+  storageId:
+    description: Storage ID
+  projectId:
+    description: Storage ID
+  groupId:
+    description: Group ID
+  languageId:
+    description: Language ID
+  branchId:
+    description: Branch ID
+  directoryId:
+    description: Directory ID
+  fileId:
+    description: File ID
+  revisionId:
+    description: Revision ID
+  preTranslationId:
+    description: Pre-Translate ID
+  buildId:
+    description: Build ID
+  stringId:
+    description: String ID
+  approvalId:
+    description: Approval ID
+  translationId:
+    description: Translation ID
+  voteId:
+    description: Vote ID
+  commentId:
+    description: Comment ID
+  screenshotId:
+    description: Screenshot ID
+  tagId:
+    description: Tag ID
+  conceptId:
+    description: Concept ID
+  glossaryId:
+    description: Glossary ID
+  exportId:
+    description: Export ID
+  importId:
+    description: Import ID
+  termId:
+    description: Term ID
+  tmId:
+    description: TM ID
+  mtId:
+    description: MT ID
+  reportId:
+    description: Report ID
+  reportSettingsTemplateId:
+    description: Report Settings Template ID
+  taskId:
+    description: Task ID
+  userId:
+    description: User ID
+  memberId:
+    description: Member ID
+  webhookId:
+    description: Webhook ID
+  bundleId:
+    description: Bundle ID
+  hash:
+    description: Hash ID
+  labelId:
+    description: Label ID
+  stepId:
+    description: Step ID
+  teamId:
+    description: Team ID
 
 outputs:
   status:

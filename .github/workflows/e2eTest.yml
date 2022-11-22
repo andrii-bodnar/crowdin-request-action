@@ -1,4 +1,5 @@
 name: 'e2e-test'
+
 on:
   push:
     branches:
@@ -11,8 +12,50 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./
+        name: Get language
         with:
-          route: GET /languages
+          route: GET /languages/{languageId}
+          languageId: uk
         env:
           CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
           CROWDIN_ORGANIZATION: ${{ secrets.CROWDIN_ORGANIZATION }}
+
+      - uses: ./
+        name: List languages with limit
+        with:
+          route: GET /languages
+          query: |
+            {
+              "limit": 3,
+              "offset": 0
+            }
+        env:
+          CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
+          CROWDIN_ORGANIZATION: ${{ secrets.CROWDIN_ORGANIZATION }}
+
+      - uses: ./
+        name: List Files
+        with:
+          route: GET /projects/{projectId}/files
+          projectId: 2
+          query: |
+            {
+              "filter": "crowdin_sample"
+            }
+        env:
+          CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
+          CROWDIN_ORGANIZATION: ${{ secrets.CROWDIN_ORGANIZATION }}
+
+      - uses: ./
+        name: Get Project Progress
+        id: project_progress
+        with:
+          route: GET /projects/{projectId}/languages/progress
+          projectId: 2
+        env:
+          CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
+          CROWDIN_ORGANIZATION: ${{ secrets.CROWDIN_ORGANIZATION }} # Optional
+
+      - name: Access the translation progress (first language in the list)
+        run: |
+          echo ${{ fromJson(steps.project_progress.outputs.data).data[0].data.translationProgress }}

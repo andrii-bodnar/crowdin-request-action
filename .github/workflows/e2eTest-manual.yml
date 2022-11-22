@@ -1,0 +1,53 @@
+name: 'e2e-test-manual'
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: ./
+        name: Add String
+        with:
+          route: POST /projects/{projectId}/strings
+          projectId: 2
+          body: |
+            {
+              "fileId": 4,
+              "text": "New string - ${{ github.sha }}",
+              "identifier": "${{ github.sha }}",
+              "context": "super context"
+            }
+        env:
+          CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
+          CROWDIN_ORGANIZATION: ${{ secrets.CROWDIN_ORGANIZATION }}
+
+      - uses: ./
+        name: Add Storage
+        id: add_storage
+        with:
+          route: POST /storages
+          headers: |
+            Crowdin-API-FileName: test-file.json
+          body: __tests__/files/test-file.json
+        env:
+          CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
+          CROWDIN_ORGANIZATION: ${{ secrets.CROWDIN_ORGANIZATION }}
+
+      - uses: ./
+        name: Add File
+        if: ${{ success() }}
+        with:
+          route: POST /projects/{projectId}/files
+          projectId: 2
+          body: |
+            {
+              "storageId": ${{ fromJson(steps.add_storage.outputs.data).data.id }},
+              "name": "test-file.json"
+            }
+        env:
+          CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
+          CROWDIN_ORGANIZATION: ${{ secrets.CROWDIN_ORGANIZATION }}

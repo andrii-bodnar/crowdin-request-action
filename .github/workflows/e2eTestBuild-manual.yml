@@ -1,0 +1,42 @@
+name: 'e2e-test-build-manual'
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: ./
+        name: Build Project Translation
+        id: build_project
+        with:
+          route: POST /projects/{projectId}/translations/builds
+          projectId: 2
+        env:
+          CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
+          CROWDIN_ORGANIZATION: ${{ secrets.CROWDIN_ORGANIZATION }}
+
+      - uses: ./
+        name: Check Project Build Status
+        id: check_build_status
+        with:
+          route: GET /projects/{projectId}/translations/builds/{buildId}
+          projectId: 2
+          buildId: ${{ fromJson(steps.build_project.outputs.data).data.id }}
+          retry_until_finished: true
+        env:
+          CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
+          CROWDIN_ORGANIZATION: ${{ secrets.CROWDIN_ORGANIZATION }}
+
+      - uses: ./
+        name: Download Project Translations
+        with:
+          route: GET /projects/{projectId}/translations/builds/{buildId}/download
+          projectId: 2
+          buildId: ${{ fromJson(steps.build_project.outputs.data).data.id }}
+        env:
+          CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
+          CROWDIN_ORGANIZATION: ${{ secrets.CROWDIN_ORGANIZATION }}

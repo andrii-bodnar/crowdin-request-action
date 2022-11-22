@@ -1,10 +1,20 @@
-# Crowdin Request Action
+[<p align='center'><img src='/logo.png' width='150' height='150' align='center'/></p>](https://github.com/andrii-bodnar/crowdin-request-action)
+
+# Crowdin Request Action [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?url=https%3A%2F%2Fgithub.com%2Fandrii-bodnar%2Fcrowdin-request-action&text=A%20GitHub%20Action%20to%20send%20arbitrary%20requests%20to%20Crowdin%27s%20REST%20API)&nbsp;[![GitHub Repo stars](https://img.shields.io/github/stars/andrii-bodnar/crowdin-request-action?style=social&cacheSeconds=1800)](https://github.com/andrii-bodnar/crowdin-request-action/stargazers)
 
 > A GitHub Action to send arbitrary requests to Crowdin's REST API
+
+<div align="center">
+
+[**`Examples`**](/EXAMPLES.md) &nbsp;|&nbsp;
+[**`Crowdin API`**](https://developer.crowdin.com/api/v2/) &nbsp;|&nbsp;
+[**`Crowdin Enterprise API`**](https://developer.crowdin.com/enterprise/api/v2/)
 
 [![Check dist](https://github.com/andrii-bodnar/crowdin-request-action/actions/workflows/check-dist.yml/badge.svg)](https://github.com/andrii-bodnar/crowdin-request-action/actions/workflows/check-dist.yml)
 [![build-test](https://github.com/andrii-bodnar/crowdin-request-action/actions/workflows/test.yml/badge.svg)](https://github.com/andrii-bodnar/crowdin-request-action/actions/workflows/test.yml)
 [![e2e-test](https://github.com/andrii-bodnar/crowdin-request-action/actions/workflows/e2eTest.yml/badge.svg)](https://github.com/andrii-bodnar/crowdin-request-action/actions/workflows/e2eTest.yml)
+
+</div>
 
 ## Usage
 
@@ -34,7 +44,7 @@ jobs:
       uses: actions/checkout@v3
 
     - name: Make Crowdin Request
-      uses: andrii-bodnar/crowdin-request-action@latest
+      uses: andrii-bodnar/crowdin-request-action@0.0.1
       with:
         route: GET /languages
       env:
@@ -44,17 +54,44 @@ jobs:
 
 ## Inputs
 
-| Option  | Required | Description      |
-|---------|----------|------------------|
-| `route` | `true`   | HTTP Verb + path |
+| Option                 | Required | Type      | Description                                                                                                                                                     |
+|------------------------|----------|-----------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `route`                | `true`   | `string`  | HTTP Verb + path                                                                                                                                                |
+| `body`                 | `false`  | `string`  | Request body (for POST, PUT, PATCH methods)                                                                                                                     |
+| `query`                | `false`  | `string`  | Query parameters (for GET methods)                                                                                                                              |
+| `headers`              | `false`  | `string`  | Request headers                                                                                                                                                 |
+| Retry configuration    |          |           |                                                                                                                                                                 |
+| `retries`              | `false`  | `number`  | Retries count to be made after receiving an error response                                                                                                      |
+| `wait_interval`        | `false`  | `number`  | Wait interval between retries. Default is 1000 ms (1 sec)                                                                                                       |
+| `skip_error_codes`     | `false`  | `string`  | Error codes for which the retries shouldn't be applied. Separated by comma                                                                                      |
+| `retry_until_finished` | `false`  | `boolean` | Retry the request until the asynchronous action finished (should be used to check the status of the operation, for example, check the translation build status) |
+
+See the [EXAMPLES.md](/EXAMPLES.md) file to check these parameters' usage.
 
 ## Outputs
 
-| Option    |                                                               |
+This actions provides the following outputs that can be used by other steps in your workflow:
+
+| Option    | Description                                                   |
 |-----------|---------------------------------------------------------------|
 | `status`  | Response status code                                          |
 | `headers` | Response headers as JSON string with lower cased header names |
-| `data`    | Response body as string                                       |
+| `data`    | Response body as a JSON string                                |
+
+To access deep values of these outputs, check out the [fromJson](https://docs.github.com/en/actions/learn-github-actions/contexts#fromjson) function.
+
+Also, there are a few examples of the outputs' usage in the [EXAMPLES.md](/EXAMPLES.md) file.
+
+## Environment variables
+
+| Variable                 | Required | Description                                                                                            |
+|--------------------------|----------|--------------------------------------------------------------------------------------------------------|
+| `CROWDIN_PERSONAL_TOKEN` | `true`   | Your Crowdin Personal Access Token. Can be generated in your Account settings                          |
+| `CROWDIN_ORGANIZATION`   | `false`  | Your Crowdin Enterprise organization name (for example, `test-org` for `https://test-org.crowdin.com`) |
+
+## Debugging
+
+To see additional debug logs, read the [Enabling debug logging](https://docs.github.com/en/actions/monitoring-and-troubleshooting-workflows/enabling-debug-logging).
 
 ## Contributing
 
