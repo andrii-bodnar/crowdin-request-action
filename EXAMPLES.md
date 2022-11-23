@@ -56,6 +56,8 @@
     CROWDIN_ORGANIZATION: ${{ secrets.CROWDIN_ORGANIZATION }} # Optional
 ```
 
+The value of the `query` option should be a valid JSON object.
+
 ### List project files
 
 ```yaml
@@ -91,6 +93,8 @@
     echo ${{ fromJson(steps.project_progress.outputs.data).data[0].data.translationProgress }}
 ```
 
+Please note if you want to use the action output like in this example, you need to set a unique id for the step to access its outputs.
+
 ### Add string to a project file
 
 ```yaml
@@ -111,11 +115,15 @@
     CROWDIN_ORGANIZATION: ${{ secrets.CROWDIN_ORGANIZATION }} # Optional
 ```
 
+The value of the `body` option should be a valid JSON object.
+
+For more information about the `github.sha` used in this example see the [`github` context](https://docs.github.com/en/actions/learn-github-actions/contexts#github-context) docs.
+
 ### Add storage
 
-This example demonstrated the showcase of using headers.
+This example demonstrates a showcase of using headers.
 
-There are two options to pass the body in this case:
+There are two ways of passing the storage body:
 
 - specifying the file path as a `body` value
 - passing the file content as a `body` value
@@ -136,6 +144,8 @@ There are two options to pass the body in this case:
 ## More complex use cases
 
 ### Add a file to a Crowdin project
+
+To add a file to a Crowdin project you need two requests: Add Storage, and Add File:
 
 ```yaml
 - uses: andrii-bodnar/crowdin-request-action@0.0.1
@@ -170,6 +180,8 @@ In this case, we've used the `add_storage` step output to provide the `storageId
 
 ### Build project translations
 
+The translations downloading process involves making the following requests: Build project Translation, Check Project Build Status until the status will be finished, and Download Project Translations.
+
 ```yaml
 - uses: andrii-bodnar/crowdin-request-action@0.0.1
   name: Build Project Translation
@@ -179,7 +191,7 @@ In this case, we've used the `add_storage` step output to provide the `storageId
     projectId: 2
   env:
     CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
-    CROWDIN_ORGANIZATION: ${{ secrets.CROWDIN_ORGANIZATION }}
+    CROWDIN_ORGANIZATION: ${{ secrets.CROWDIN_ORGANIZATION }} # Optional
 
 - uses: andrii-bodnar/crowdin-request-action@0.0.1
   name: Check Project Build Status
@@ -188,10 +200,10 @@ In this case, we've used the `add_storage` step output to provide the `storageId
     route: GET /projects/{projectId}/translations/builds/{buildId}
     projectId: 2
     buildId: ${{ fromJson(steps.build_project.outputs.data).data.id }}
-    retry_until_finished: true # This parameter will retry the build progress checking until finished
+    retry_until_finished: true # This option will retry the build progress checking until finished
   env:
     CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
-    CROWDIN_ORGANIZATION: ${{ secrets.CROWDIN_ORGANIZATION }}
+    CROWDIN_ORGANIZATION: ${{ secrets.CROWDIN_ORGANIZATION }} # Optional
 
 - uses: andrii-bodnar/crowdin-request-action@0.0.1
   name: Download Project Translations
@@ -201,5 +213,7 @@ In this case, we've used the `add_storage` step output to provide the `storageId
     buildId: ${{ fromJson(steps.build_project.outputs.data).data.id }}
   env:
     CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
-    CROWDIN_ORGANIZATION: ${{ secrets.CROWDIN_ORGANIZATION }}
+    CROWDIN_ORGANIZATION: ${{ secrets.CROWDIN_ORGANIZATION }} # Optional
 ```
+
+Please note, that the `retry_until_finished` option was used in the _Check Project Build Status_ step. This option will retry the request until the status will be finished and only then the next step will be executed.
