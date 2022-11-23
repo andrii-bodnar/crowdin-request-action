@@ -1,4 +1,4 @@
-[<p align='center'><img src='/logo.png' width='150' height='150' align='center'/></p>](https://github.com/andrii-bodnar/crowdin-request-action)
+[<p align='center'><img src='logo.png' width='150' height='150' align='center'/></p>](https://github.com/andrii-bodnar/crowdin-request-action)
 
 # Crowdin Request Action [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?url=https%3A%2F%2Fgithub.com%2Fandrii-bodnar%2Fcrowdin-request-action&text=A%20GitHub%20Action%20to%20send%20arbitrary%20requests%20to%20Crowdin%27s%20REST%20API)&nbsp;[![GitHub Repo stars](https://img.shields.io/github/stars/andrii-bodnar/crowdin-request-action?style=social&cacheSeconds=1800)](https://github.com/andrii-bodnar/crowdin-request-action/stargazers)
 
