@@ -13,6 +13,7 @@
 [![Check dist](https://github.com/andrii-bodnar/crowdin-request-action/actions/workflows/check-dist.yml/badge.svg)](https://github.com/andrii-bodnar/crowdin-request-action/actions/workflows/check-dist.yml)
 [![build-test](https://github.com/andrii-bodnar/crowdin-request-action/actions/workflows/test.yml/badge.svg)](https://github.com/andrii-bodnar/crowdin-request-action/actions/workflows/test.yml)
 [![e2e-test](https://github.com/andrii-bodnar/crowdin-request-action/actions/workflows/e2eTest.yml/badge.svg)](https://github.com/andrii-bodnar/crowdin-request-action/actions/workflows/e2eTest.yml)
+[![codecov](https://codecov.io/gh/andrii-bodnar/crowdin-request-action/branch/main/graph/badge.svg?token=5XBCG8YW8A)](https://codecov.io/gh/andrii-bodnar/crowdin-request-action)
 
 </div>
 
