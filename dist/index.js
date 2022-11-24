@@ -323,7 +323,7 @@ class Requester {
             headers.set(headerName, value);
         });
         return {
-            headers: Object.assign({ 'Content-Type': contentType, Authorization: `Bearer ${this.credentialsConfig.token}` }, Object.fromEntries(headers))
+            headers: Object.assign({ 'Content-Type': contentType, 'User-Agent': `crowdin-request-action/0.0.1 axios/${axios_1.default.VERSION}`, Authorization: `Bearer ${this.credentialsConfig.token}` }, Object.fromEntries(headers))
         };
     }
     get(url, config) {
