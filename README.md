@@ -45,7 +45,7 @@ jobs:
       uses: actions/checkout@v3
 
     - name: Make Crowdin Request
-      uses: andrii-bodnar/crowdin-request-action@0.0.1
+      uses: andrii-bodnar/crowdin-request-action@0.0.2
       with:
         route: GET /languages
       env:
