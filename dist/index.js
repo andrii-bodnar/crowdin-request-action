@@ -343,7 +343,7 @@ class Requester {
     }
     patch(url, data, config) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.retryService.executeAsyncFunc(() => axios_1.default.patch(url, config));
+            return yield this.retryService.executeAsyncFunc(() => axios_1.default.patch(url, data, config));
         });
     }
     delete(url, config) {
