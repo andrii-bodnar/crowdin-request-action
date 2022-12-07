@@ -198,7 +198,7 @@ export class Requester {
     }
 
     protected async patch(url: string, data?: unknown, config?: AxiosRequestConfig) {
-        return await this.retryService.executeAsyncFunc(() => axios.patch(url, config));
+        return await this.retryService.executeAsyncFunc(() => axios.patch(url, data, config));
     }
 
     protected async delete(url: string, config: AxiosRequestConfig) {
