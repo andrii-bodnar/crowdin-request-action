@@ -178,7 +178,7 @@ export class Requester {
         return {
             headers: {
                 'Content-Type': contentType,
-                'User-Agent': `crowdin-request-action/0.0.1 axios/${axios.VERSION}`,
+                'User-Agent': `crowdin-request-action/0.0.2 axios/${axios.VERSION}`,
                 Authorization: `Bearer ${this.credentialsConfig.token}`,
                 ...Object.fromEntries(headers)
             }
