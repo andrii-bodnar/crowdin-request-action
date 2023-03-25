@@ -46,7 +46,7 @@ jobs:
           body: |
             {
               "storageId": ${{ fromJson(steps.add_storage.outputs.data).data.id }},
-              "name": "test-file.json"
+              "name": "test-file-${{ github.run_id }}-${{ github.run_attempt }}.json"
             }
         env:
           CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
