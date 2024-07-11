@@ -42,10 +42,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Make Crowdin Request
-      uses: andrii-bodnar/crowdin-request-action@0.0.2
+      uses: andrii-bodnar/crowdin-request-action@0.1.0
       with:
         route: GET /languages
       env:
@@ -106,7 +106,7 @@ If you would like to contribute please read the [Contributing](/CONTRIBUTING.md)
 
 <pre>
 The Crowdin Request Action is licensed under the MIT License.
-See the LICENSE.md file distributed with this work for additional
+See the LICENSE file distributed with this work for additional
 information regarding copyright ownership.
 
 Except as contained in the LICENSE file, the name(s) of the above copyright
