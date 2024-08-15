@@ -58,7 +58,6 @@ function run() {
             }
             if (process.env.CROWDIN_ORGANIZATION) {
                 credentialsConfig.organization = process.env.CROWDIN_ORGANIZATION;
-                core.setSecret(String(credentialsConfig.organization));
             }
             validateCredentials(credentialsConfig);
             yield makeRequest(credentialsConfig);
@@ -4693,8 +4692,117 @@ const core_1 = __nccwpck_require__(4275);
  * You can then export reports in .xlsx or .csv file formats.
  * Report generation is an asynchronous operation and shall be completed with a sequence of API methods.
  */
-//TODO add missing endpoints (https://github.com/crowdin/crowdin-api-client-js/issues/391)
 class Reports extends core_1.CrowdinApi {
+    /**
+     * @param options optional parameters for the request
+     * @see https://developer.crowdin.com/enterprise/api/v2/#operation/api.reports.archives.getMany
+     */
+    listOrganizationReportArchives(options) {
+        let url = `${this.url}/reports/archives`;
+        url = this.addQueryParam(url, 'scopeId', options === null || options === void 0 ? void 0 : options.scopeId);
+        url = this.addQueryParam(url, 'scopeType', options === null || options === void 0 ? void 0 : options.scopeType);
+        return this.getList(url, options === null || options === void 0 ? void 0 : options.limit, options === null || options === void 0 ? void 0 : options.offset);
+    }
+    /**
+     * @param archiveId archive identifier
+     * @see https://developer.crowdin.com/enterprise/api/v2/#operation/api.reports.archives.get
+     */
+    getOrganizationReportArchive(archiveId) {
+        const url = `${this.url}/reports/archives/${archiveId}`;
+        return this.get(url, this.defaultConfig());
+    }
+    /**
+     * @param archiveId archive identifier
+     * @see https://developer.crowdin.com/enterprise/api/v2/#operation/api.reports.archives.delete
+     */
+    deleteOrganizationReportArchive(archiveId) {
+        const url = `${this.url}/reports/archives/${archiveId}`;
+        return this.delete(url, this.defaultConfig());
+    }
+    /**
+     * @param archiveId archive identifier
+     * @see https://developer.crowdin.com/enterprise/api/v2/#operation/api.reports.archives.exports.post
+     */
+    exportOrganizationReportArchive(archiveId, request = {}) {
+        const url = `${this.url}/reports/archives/${archiveId}/exports`;
+        return this.post(url, request, this.defaultConfig());
+    }
+    /**
+     * @param archiveId archive identifier
+     * @param exportId export identifier
+     * @see https://developer.crowdin.com/enterprise/api/v2/#operation/api.reports.archives.exports.get
+     */
+    checkOrganizationReportArchiveStatus(archiveId, exportId) {
+        const url = `${this.url}/reports/archives/${archiveId}/exports/${exportId}`;
+        return this.get(url, this.defaultConfig());
+    }
+    /**
+     * @param archiveId archive identifier
+     * @param exportId export identifier
+     * @see https://developer.crowdin.com/enterprise/api/v2/#operation/api.reports.archives.exports.download.get
+     */
+    downloadOrganizationReportArchive(archiveId, exportId) {
+        const url = `${this.url}/reports/archives/${archiveId}/exports/${exportId}/download`;
+        return this.get(url, this.defaultConfig());
+    }
+    /**
+     * @param userId user identifier
+     * @param options optional parameters for the request
+     * @see https://developer.crowdin.com/api/v2/#operation/api.reports.archives.getMany
+     */
+    listUserReportArchives(userId, options) {
+        let url = `${this.url}/users/${userId}/reports/archives`;
+        url = this.addQueryParam(url, 'scopeId', options === null || options === void 0 ? void 0 : options.scopeId);
+        url = this.addQueryParam(url, 'scopeType', options === null || options === void 0 ? void 0 : options.scopeType);
+        return this.getList(url, options === null || options === void 0 ? void 0 : options.limit, options === null || options === void 0 ? void 0 : options.offset);
+    }
+    /**
+     * @param userId user identifier
+     * @param archiveId archive identifier
+     * @see https://developer.crowdin.com/api/v2/#operation/api.users.reports.archives.get
+     */
+    getUserReportArchive(userId, archiveId) {
+        const url = `${this.url}/users/${userId}/reports/archives/${archiveId}`;
+        return this.get(url, this.defaultConfig());
+    }
+    /**
+     * @param userId user identifier
+     * @param archiveId archive identifier
+     * @see https://developer.crowdin.com/api/v2/#operation/api.users.reports.archives.delete
+     */
+    deleteUserReportArchive(userId, archiveId) {
+        const url = `${this.url}/users/${userId}/reports/archives/${archiveId}`;
+        return this.delete(url, this.defaultConfig());
+    }
+    /**
+     * @param userId user identifier
+     * @param archiveId archive identifier
+     * @see https://developer.crowdin.com/api/v2/#operation/api.reports.archives.exports.post
+     */
+    exportUserReportArchive(userId, archiveId, request = {}) {
+        const url = `${this.url}/users/${userId}/reports/archives/${archiveId}/exports`;
+        return this.post(url, request, this.defaultConfig());
+    }
+    /**
+     * @param userId user identifier
+     * @param archiveId archive identifier
+     * @param exportId export identifier
+     * @see https://developer.crowdin.com/api/v2/#operation/api.users.reports.archives.exports.get
+     */
+    checkUserReportArchiveStatus(userId, archiveId, exportId) {
+        const url = `${this.url}/users/${userId}/reports/archives/${archiveId}/exports/${exportId}`;
+        return this.get(url, this.defaultConfig());
+    }
+    /**
+     * @param userId user identifier
+     * @param archiveId archive identifier
+     * @param exportId export identifier
+     * @see https://developer.crowdin.com/api/v2/#operation/api.users.reports.archives.exports.download.get
+     */
+    downloadUserReportArchive(userId, archiveId, exportId) {
+        const url = `${this.url}/users/${userId}/reports/archives/${archiveId}/exports/${exportId}/download`;
+        return this.get(url, this.defaultConfig());
+    }
     /**
      * @param groupId group identifier
      * @param request request body
@@ -5043,8 +5151,37 @@ const core_1 = __nccwpck_require__(4275);
  * Use API to keep the source files up to date, check on file revisions, and manage project branches.
  * Before adding source files to the project, upload each file to the Storage first.
  */
-//TODO add missing branch endpoints (https://github.com/crowdin/crowdin-api-client-js/issues/380)
 class SourceFiles extends core_1.CrowdinApi {
+    /**
+     * @param projectId project identifier
+     * @param branchId branch identifier
+     * @param cloneId clone branch identifier
+     * @see https://developer.crowdin.com/api/v2/string-based/#operation/api.projects.branches.clones.branch.get
+     */
+    getClonedBranch(projectId, branchId, cloneId) {
+        const url = `${this.url}/projects/${projectId}/branches/${branchId}/clones/${cloneId}/branch`;
+        return this.get(url, this.defaultConfig());
+    }
+    /**
+     * @param projectId project identifier
+     * @param branchId branch identifier
+     * @param request request body
+     * @see https://developer.crowdin.com/api/v2/string-based/#operation/api.projects.branches.clones.post
+     */
+    clonedBranch(projectId, branchId, request) {
+        const url = `${this.url}/projects/${projectId}/branches/${branchId}/clones`;
+        return this.post(url, request, this.defaultConfig());
+    }
+    /**
+     * @param projectId project identifier
+     * @param branchId branch identifier
+     * @param cloneId clone branch identifier
+     * @see https://developer.crowdin.com/api/v2/string-based/#operation/api.projects.branches.clones.get
+     */
+    checkBranchClonedStatus(projectId, branchId, cloneId) {
+        const url = `${this.url}/projects/${projectId}/branches/${branchId}/clones/${cloneId}`;
+        return this.get(url, this.defaultConfig());
+    }
     listProjectBranches(projectId, options, deprecatedLimit, deprecatedOffset) {
         if ((0, core_1.isOptionalString)(options, '1' in arguments)) {
             options = { name: options, limit: deprecatedLimit, offset: deprecatedOffset };
@@ -5889,8 +6026,25 @@ var TasksModel;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Teams = void 0;
 const core_1 = __nccwpck_require__(4275);
-//TODO add missing endpoints
 class Teams extends core_1.CrowdinApi {
+    /**
+     * @param teamId team identifier
+     * @param options request options
+     * @see https://developer.crowdin.com/enterprise/api/v2/#operation/api.teams.projects.permissions.getMany
+     */
+    listTeamProjectPermissions(teamId, options) {
+        const url = `${this.url}/teams/${teamId}/projects/permissions`;
+        return this.getList(url, options === null || options === void 0 ? void 0 : options.limit, options === null || options === void 0 ? void 0 : options.offset);
+    }
+    /**
+     * @param teamId team identifier
+     * @param request request body
+     * @see https://developer.crowdin.com/enterprise/api/v2/#operation/api.teams.projects.permissions.patch
+     */
+    editTeamProjectPermissions(teamId, request) {
+        const url = `${this.url}/teams/${teamId}/projects/permissions`;
+        return this.patch(url, request, this.defaultConfig());
+    }
     /**
      * @param projectId project identifier
      * @param request request body
@@ -7390,7 +7544,6 @@ const core_1 = __nccwpck_require__(4275);
  * In Crowdin Enterprise users are the members of your organization with the defined access levels.
  * Use API to get the list of organization users and to check the information on a specific user.
  */
-//TODO add missing endpoints
 class Users extends core_1.CrowdinApi {
     listProjectMembers(projectId, options, deprecatedRole, deprecatedLanguageId, deprecatedLimit, deprecatedOffset) {
         let url = `${this.url}/projects/${projectId}/members`;
@@ -7502,6 +7655,41 @@ class Users extends core_1.CrowdinApi {
     getAuthenticatedUser() {
         const url = `${this.url}/user`;
         return this.get(url, this.defaultConfig());
+    }
+    /**
+     * @param request request body
+     * @see https://developer.crowdin.com/api/v2/#operation/api.user.patch
+     */
+    editAuthenticatedUser(request) {
+        const url = `${this.url}/user`;
+        return this.patch(url, request, this.defaultConfig());
+    }
+    /**
+     * @param userId user identifier
+     * @param options request options
+     * @see https://developer.crowdin.com/enterprise/api/v2/#operation/api.users.projects.permissions.getMany
+     */
+    listUserProjectPermissions(userId, options) {
+        const url = `${this.url}/users/${userId}/projects/permissions`;
+        return this.getList(url, options === null || options === void 0 ? void 0 : options.limit, options === null || options === void 0 ? void 0 : options.offset);
+    }
+    /**
+     * @param userId user identifier
+     * @param request request body
+     * @see https://developer.crowdin.com/enterprise/api/v2/#operation/api.users.projects.permissions.patch
+     */
+    editUserProjectPermissions(userId, request) {
+        const url = `${this.url}/users/${userId}/projects/permissions`;
+        return this.patch(url, request, this.defaultConfig());
+    }
+    /**
+     * @param userId user identifier
+     * @param options request options
+     * @see https://developer.crowdin.com/enterprise/api/v2/#operation/api.users.projects.contributions.getMany
+     */
+    listUserProjectContributions(userId, options) {
+        const url = `${this.url}/users/${userId}/projects/contributions`;
+        return this.getList(url, options === null || options === void 0 ? void 0 : options.limit, options === null || options === void 0 ? void 0 : options.offset);
     }
 }
 exports.Users = Users;

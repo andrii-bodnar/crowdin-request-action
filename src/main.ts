@@ -22,7 +22,6 @@ async function run(): Promise<void> {
 
         if (process.env.CROWDIN_ORGANIZATION) {
             credentialsConfig.organization = process.env.CROWDIN_ORGANIZATION;
-            core.setSecret(String(credentialsConfig.organization));
         }
 
         validateCredentials(credentialsConfig);
