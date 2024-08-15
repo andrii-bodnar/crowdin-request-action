@@ -1,6 +1,6 @@
 {
   "name": "crowdin-request-action",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "description": "A GitHub Action to send arbitrary requests to Crowdin's REST API",
   "main": "lib/main.js",

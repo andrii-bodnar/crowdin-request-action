@@ -17,7 +17,7 @@
 ### List languages
 
 ```yaml
-- uses: andrii-bodnar/crowdin-request-action@0.1.0
+- uses: andrii-bodnar/crowdin-request-action@0.2.0
   name: Make Crowdin Request
   with:
     route: GET /languages
@@ -29,7 +29,7 @@
 ### Get specific language
 
 ```yaml
-- uses: andrii-bodnar/crowdin-request-action@0.1.0
+- uses: andrii-bodnar/crowdin-request-action@0.2.0
   name: Get language
   with:
     route: GET /languages/{languageId}
@@ -42,7 +42,7 @@
 ### Using query parameters
 
 ```yaml
-- uses: andrii-bodnar/crowdin-request-action@0.1.0
+- uses: andrii-bodnar/crowdin-request-action@0.2.0
   name: List languages with limit
   with:
     route: GET /languages
@@ -61,7 +61,7 @@ The value of the `query` option should be a valid JSON object.
 ### List project files
 
 ```yaml
-- uses: andrii-bodnar/crowdin-request-action@0.1.0
+- uses: andrii-bodnar/crowdin-request-action@0.2.0
   name: List Files with filter
   with:
     route: GET /projects/{projectId}/files
@@ -78,7 +78,7 @@ The value of the `query` option should be a valid JSON object.
 ### Get project progress
 
 ```yaml
-- uses: andrii-bodnar/crowdin-request-action@0.1.0
+- uses: andrii-bodnar/crowdin-request-action@0.2.0
   name: Get Project Progress
   id: project_progress
   with:
@@ -98,7 +98,7 @@ Please note if you want to use the action output like in this example, you need 
 ### Add string to a project file
 
 ```yaml
-- uses: andrii-bodnar/crowdin-request-action@0.1.0
+- uses: andrii-bodnar/crowdin-request-action@0.2.0
   name: Add String
   with:
     route: POST /projects/{projectId}/strings
@@ -129,7 +129,7 @@ There are two ways of passing the storage body:
 - passing the file content as a `body` value
 
 ```yaml
-- uses: andrii-bodnar/crowdin-request-action@0.1.0
+- uses: andrii-bodnar/crowdin-request-action@0.2.0
   name: Add Storage
   with:
     route: POST /storages
@@ -148,7 +148,7 @@ There are two ways of passing the storage body:
 To add a file to a Crowdin project you need two requests: Add Storage, and Add File:
 
 ```yaml
-- uses: andrii-bodnar/crowdin-request-action@0.1.0
+- uses: andrii-bodnar/crowdin-request-action@0.2.0
   name: Add Storage
   id: add_storage
   with:
@@ -160,7 +160,7 @@ To add a file to a Crowdin project you need two requests: Add Storage, and Add F
     CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
     CROWDIN_ORGANIZATION: ${{ secrets.CROWDIN_ORGANIZATION }} # Optional
 
-- uses: andrii-bodnar/crowdin-request-action@0.1.0
+- uses: andrii-bodnar/crowdin-request-action@0.2.0
   name: Add File
   if: ${{ success() }}
   with:
@@ -183,7 +183,7 @@ In this case, we've used the `add_storage` step output to provide the `storageId
 The translations downloading process involves making the following requests: Build project Translation, Check Project Build Status until the status will be finished, and Download Project Translations.
 
 ```yaml
-- uses: andrii-bodnar/crowdin-request-action@0.1.0
+- uses: andrii-bodnar/crowdin-request-action@0.2.0
   name: Build Project Translation
   id: build_project
   with:
@@ -193,7 +193,7 @@ The translations downloading process involves making the following requests: Bui
     CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
     CROWDIN_ORGANIZATION: ${{ secrets.CROWDIN_ORGANIZATION }} # Optional
 
-- uses: andrii-bodnar/crowdin-request-action@0.1.0
+- uses: andrii-bodnar/crowdin-request-action@0.2.0
   name: Check Project Build Status
   id: check_build_status
   with:
@@ -205,7 +205,7 @@ The translations downloading process involves making the following requests: Bui
     CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
     CROWDIN_ORGANIZATION: ${{ secrets.CROWDIN_ORGANIZATION }} # Optional
 
-- uses: andrii-bodnar/crowdin-request-action@0.1.0
+- uses: andrii-bodnar/crowdin-request-action@0.2.0
   name: Download Project Translations
   with:
     route: GET /projects/{projectId}/translations/builds/{buildId}/download
