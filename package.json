@@ -43,7 +43,7 @@
     "@types/js-yaml": "^4.0.9",
     "@types/node": "^22.0.2",
     "@types/pretty": "^2.0.3",
-    "@typescript-eslint/parser": "^5.56.0",
+    "@typescript-eslint/parser": "^5.62.0",
     "@vercel/ncc": "^0.38.1",
     "eslint": "^8.57.0",
     "eslint-plugin-github": "^4.7.0",
