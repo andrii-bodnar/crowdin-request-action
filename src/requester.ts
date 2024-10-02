@@ -98,7 +98,7 @@ export class Requester {
         const requestConfig = this.getRequestConfig(contentType);
 
         core.startGroup('Request');
-        core.info(requestUrl);
+        core.info(`${method.toUpperCase()} ${requestUrl}`);
         this.debugObject(requestConfig);
         this.query && this.debugObject(this.query);
         this.body && !isStorageAdding && this.debugObject(this.body);
